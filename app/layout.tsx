@@ -23,7 +23,7 @@ export default function RootLayout({
       <html lang="en">
         <body
           className={cn(
-            "dark:bg-neutral-900/80 dark:text-white",
+            "bg-gray-100 dark:bg-neutral-900/80 dark:text-white",
             font.className,
           )}
         >

@@ -14,7 +14,7 @@ const Logo = () => {
       <TvMinimalPlay className="h-16 w-16" />
 
       <span className={cn("text-lg font-semibold", font.className)}>
-        Live Stream
+        LiveStream
       </span>
     </div>
   );
