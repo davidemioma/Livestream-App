@@ -12,12 +12,17 @@ const font = Inter({
 const Logo = () => {
   return (
     <Link href="/">
-      <div className="hidden items-center gap-2 transition hover:opacity-75 md:flex">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#252731] text-white dark:bg-white dark:text-black">
-          <TvMinimalPlay className="h-6 w-6" />
+      <div className="flex items-center gap-2 transition hover:opacity-75">
+        <div className="mr-3 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#252731] text-white dark:bg-white dark:text-black md:mr-0 md:h-10 md:w-10">
+          <TvMinimalPlay className="h-5 w-5 md:h-6 md:w-6" />
         </div>
 
-        <span className={cn(font.className, "text-lg font-semibold")}>
+        <span
+          className={cn(
+            font.className,
+            "hidden text-lg font-semibold md:inline-block",
+          )}
+        >
           LiveStream
         </span>
       </div>

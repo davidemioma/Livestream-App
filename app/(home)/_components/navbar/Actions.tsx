@@ -1,0 +1,38 @@
+import React from "react";
+import Link from "next/link";
+import { Clapperboard } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { currentUser } from "@clerk/nextjs/server";
+import CustomToolTip from "@/components/CustomToolTip";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { SignInButton, UserButton } from "@clerk/nextjs";
+
+const Actions = async () => {
+  const user = await currentUser();
+
+  return (
+    <div className="ml-4 flex items-center gap-3 md:gap-4 lg:ml-0">
+      {!user && (
+        <SignInButton>
+          <Button size="sm" variant="primary">
+            Sign In
+          </Button>
+        </SignInButton>
+      )}
+
+      {!!user && <UserButton signInUrl="/sign-in" />}
+
+      {!!user && (
+        <CustomToolTip label="Dashboard" asChild side="bottom" align="center">
+          <Link href={`/u/${user.username}`}>
+            <Clapperboard className="h-5 w-5 text-muted-foreground" />
+          </Link>
+        </CustomToolTip>
+      )}
+
+      <ThemeToggle />
+    </div>
+  );
+};
+
+export default Actions;
