@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import NavBar from "./_components/navbar";
-import SideBar from "./_components/sidebar";
+import Container from "@/components/Container";
+import SideBar, { SidebarSkeleton } from "./_components/sidebar";
 
 export default function HomeLayout({
   children,
@@ -11,9 +13,11 @@ export default function HomeLayout({
       <NavBar />
 
       <div className="flex h-full w-full pt-20">
-        <SideBar />
+        <Suspense fallback={<SidebarSkeleton />}>
+          <SideBar />
+        </Suspense>
 
-        {children}
+        <Container>{children}</Container>
       </div>
     </>
   );

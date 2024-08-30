@@ -14,7 +14,7 @@ const Toggle = () => {
   return (
     <>
       {collapsed ? (
-        <div className="mb-4 hidden items-center justify-center pt-4 md:flex">
+        <div className="mb-4 hidden items-center justify-center pt-4 lg:flex">
           <CustomToolTip label="Expand" asChild side="right">
             <Button className="p-2" variant="ghost" onClick={onExpand}>
               <ArrowRightFromLineIcon className="h-4 w-4" />
@@ -22,7 +22,7 @@ const Toggle = () => {
           </CustomToolTip>
         </div>
       ) : (
-        <div className="flex items-center justify-between p-3 pl-6">
+        <div className="hidden items-center justify-between p-3 pl-6 lg:flex">
           <span className="text-semibold text-sm">For you</span>
 
           <CustomToolTip label="Collapse" asChild side="right">
