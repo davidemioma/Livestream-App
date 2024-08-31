@@ -12,12 +12,10 @@ type Props = {
 const Recommended = ({ recommended }: Props) => {
   const { collapsed } = useSidebar();
 
-  const showLabel = !collapsed;
-
   return (
     <div>
-      {showLabel && (
-        <div className="mb-4 pl-6">
+      {!collapsed && (
+        <div className="mb-3 pl-6">
           <p className="text-sm text-muted-foreground">Recommended</p>
         </div>
       )}
@@ -34,7 +32,7 @@ const Recommended = ({ recommended }: Props) => {
 export const RecommendedSkeleton = () => {
   return (
     <ul className="space-y-2 px-2">
-      {new Array(6).fill("").map((_, i) => (
+      {new Array(5).fill("").map((_, i) => (
         <UserItemSkeleton key={i} />
       ))}
     </ul>

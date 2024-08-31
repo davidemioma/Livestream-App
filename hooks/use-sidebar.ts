@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 interface SidebarState {
   collapsed: boolean;
@@ -6,24 +7,18 @@ interface SidebarState {
   onCollapse: () => void;
 }
 
-const getInitialState = (): boolean => {
-  const stored = localStorage.getItem("live-stream-app-sidebar");
-
-  return stored === "true";
-};
-
-const useSidebar = create<SidebarState>()((set) => ({
-  collapsed: getInitialState(),
-  onExpand: () => {
-    set({ collapsed: false });
-
-    localStorage.setItem("live-stream-app-sidebar", "false");
-  },
-  onCollapse: () => {
-    set({ collapsed: true });
-
-    localStorage.setItem("live-stream-app-sidebar", "true");
-  },
-}));
+const useSidebar = create<SidebarState>()(
+  persist(
+    (set) => ({
+      collapsed: false,
+      onExpand: () => set({ collapsed: false }),
+      onCollapse: () => set({ collapsed: true }),
+    }),
+    {
+      name: "live-stream-sidebar",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);
 
 export default useSidebar;

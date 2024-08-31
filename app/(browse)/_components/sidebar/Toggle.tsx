@@ -3,13 +3,11 @@
 import React from "react";
 import useSidebar from "@/hooks/use-sidebar";
 import { Button } from "@/components/ui/button";
-import { ArrowLeftFromLineIcon, ArrowRightFromLineIcon } from "lucide-react";
 import CustomToolTip from "@/components/CustomToolTip";
+import { ArrowLeftFromLineIcon, ArrowRightFromLineIcon } from "lucide-react";
 
 const Toggle = () => {
   const { collapsed, onExpand, onCollapse } = useSidebar();
-
-  const label = collapsed ? "Expand" : "Collapse";
 
   return (
     <>
@@ -22,7 +20,7 @@ const Toggle = () => {
           </CustomToolTip>
         </div>
       ) : (
-        <div className="hidden items-center justify-between p-3 pl-6 lg:flex">
+        <div className="mb-2 hidden items-center justify-between p-3 pl-6 lg:flex">
           <span className="text-semibold text-sm">For you</span>
 
           <CustomToolTip label="Collapse" asChild side="right">

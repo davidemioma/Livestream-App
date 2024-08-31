@@ -14,7 +14,7 @@ const Wrapper = ({ children }: Props) => {
   return (
     <aside
       className={cn(
-        "fixed left-0 z-50 h-full border-r border-t bg-background transition-all duration-300 dark:border-[#2d2e35] dark:bg-[#252731]",
+        "scrollbar-hide fixed left-0 z-50 h-[calc(100vh-80px)] overflow-y-scroll border-r border-t bg-background pb-5 transition-all duration-300 dark:border-[#2d2e35] dark:bg-[#252731]",
         collapsed ? "w-[70px]" : "w-[70px] lg:w-60",
       )}
     >

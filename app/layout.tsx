@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { dark } from "@clerk/themes";
@@ -33,6 +34,8 @@ export default function RootLayout({
             enableSystem
             storageKey="livestream-theme"
           >
+            <Toaster richColors />
+
             {children}
           </ThemeProvider>
         </body>
