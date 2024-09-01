@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import NavBar from "./_components/navbar";
-import Container from "@/components/Container";
+import Container from "./_components/Container";
 import SideBar, { SidebarSkeleton } from "./_components/sidebar";
 
 export default function HomeLayout({

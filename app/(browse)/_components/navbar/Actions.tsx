@@ -24,8 +24,15 @@ const Actions = async () => {
 
       {!!user && (
         <CustomToolTip label="Dashboard" asChild side="bottom" align="center">
-          <Link href={`/u/${user.username}`}>
+          <Link
+            href={`/u/${user.username}`}
+            className="flex items-center gap-2"
+          >
             <Clapperboard className="h-5 w-5 text-muted-foreground" />
+
+            <span className="hidden text-sm font-medium lg:block">
+              Dashboard
+            </span>
           </Link>
         </CustomToolTip>
       )}

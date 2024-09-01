@@ -21,3 +21,27 @@ export const getCurrentUser = cache(async () => {
 
   return user;
 });
+
+export const getCurrentUserByUsername = cache(async (username: string) => {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    throw new Error("Unauthorized");
+  }
+
+  const user = await prismadb.user.findUnique({
+    where: {
+      username: currentUser.username,
+    },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (currentUser.username !== user.username) {
+    throw new Error("Unauthorized");
+  }
+
+  return user;
+});
