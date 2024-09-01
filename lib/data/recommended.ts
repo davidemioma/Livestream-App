@@ -21,9 +21,38 @@ export const getRecommended = async () => {
 
     users = await prismadb.user.findMany({
       where: {
-        id: {
-          notIn: [currentUser.id, ...followedUsersIds],
-        },
+        AND: [
+          {
+            NOT: {
+              id: currentUser.id,
+            },
+          },
+          {
+            NOT: {
+              id: {
+                in: followedUsersIds,
+              },
+            },
+          },
+          {
+            NOT: {
+              blockedUsers: {
+                some: {
+                  blockerId: currentUser.id,
+                },
+              },
+            },
+          },
+          {
+            NOT: {
+              blockers: {
+                some: {
+                  blockedUserId: currentUser.id,
+                },
+              },
+            },
+          },
+        ],
       },
       take: 10,
       orderBy: {

@@ -80,6 +80,13 @@ export const getFollowedUsers = async (take?: number) => {
     const followedUsers = await prismadb.follow.findMany({
       where: {
         followerId: currentUser.id,
+        following: {
+          blockedUsers: {
+            none: {
+              blockerId: currentUser.id,
+            },
+          },
+        },
       },
       take: take || undefined,
       select: {
@@ -97,5 +104,69 @@ export const getFollowedUsers = async (take?: number) => {
     return followedUsers;
   } catch (err) {
     return [];
+  }
+};
+
+export const isUserBlocked = async (id: string) => {
+  try {
+    const currentUser = await getCurrentUser();
+
+    const otherUser = await getUserById(id);
+
+    if (!otherUser) {
+      throw new Error("User not found");
+    }
+
+    if (currentUser.id === otherUser.id) {
+      return false;
+    }
+
+    const isBlocked = await prismadb.block.findUnique({
+      where: {
+        blockerId_blockedUserId: {
+          blockerId: currentUser.id,
+          blockedUserId: otherUser.id,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    return !!isBlocked;
+  } catch (err) {
+    return false;
+  }
+};
+
+export const isBlockedByUser = async (id: string) => {
+  try {
+    const currentUser = await getCurrentUser();
+
+    const otherUser = await getUserById(id);
+
+    if (!otherUser) {
+      throw new Error("User not found");
+    }
+
+    if (currentUser.id === otherUser.id) {
+      return false;
+    }
+
+    const isBlocked = await prismadb.block.findUnique({
+      where: {
+        blockerId_blockedUserId: {
+          blockerId: otherUser.id,
+          blockedUserId: currentUser.id,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    return !!isBlocked;
+  } catch (err) {
+    return false;
   }
 };
