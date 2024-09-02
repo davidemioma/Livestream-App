@@ -4,6 +4,7 @@ import React, { useTransition } from "react";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import { updateStream } from "@/lib/actions/stream";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   label: string;
@@ -35,6 +36,16 @@ const ToggleCard = ({ label, value = false, field }: Props) => {
           {value ? "On" : "Off"}
         </Switch>
       </div>
+    </div>
+  );
+};
+
+export const ToggleCardSkeleton = () => {
+  return (
+    <div className="flex items-center justify-between rounded-xl bg-white p-5 dark:bg-[#252731]">
+      <Skeleton className="h-4 w-24" />
+
+      <Skeleton className="h-10 w-10" />
     </div>
   );
 };
