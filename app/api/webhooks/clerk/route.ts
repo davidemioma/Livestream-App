@@ -59,13 +59,18 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    // Create user in the database
-    await prismadb.user.create({
+    // Create user and stream in the database
+    const user = await prismadb.user.create({
       data: {
         externalUserId: payload.data.id,
         imageUrl: payload.data.image_url,
         username: payload.data.username,
         email: payload.data.email_addresses[0].email_address,
+        streams: {
+          create: {
+            name: `${payload.data.username}'s Stream`,
+          },
+        },
       },
     });
   }
