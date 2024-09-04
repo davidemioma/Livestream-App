@@ -6,7 +6,7 @@ import useSidebar from "@/hooks/use-sidebar";
 import UserItem, { UserItemSkeleton } from "./UserItem";
 
 type Props = {
-  recommended: User[];
+  recommended: (User & { stream: { isLive: boolean } | null })[];
 };
 
 const Recommended = ({ recommended }: Props) => {

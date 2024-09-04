@@ -40,7 +40,7 @@ model User {
   blockers Block[] @relation("Blocker")
   blockedUsers Block[] @relation("BlockedUser")
 
-  streams Stream?
+  stream Stream?
 
   @@index([username])
   @@index([email])

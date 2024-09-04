@@ -28,7 +28,7 @@ const ToggleCard = ({ label, value = false, field }: Props) => {
   };
 
   return (
-    <div className="flex items-center justify-between rounded-xl bg-white p-5 dark:bg-[#252731]">
+    <div className="flex items-center justify-between gap-2 rounded-xl bg-white p-5 dark:bg-[#252731]">
       <p className="shrink-0 font-semibold">{label}</p>
 
       <div className="space-y-2">

@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import UserItem, { UserItemSkeleton } from "./UserItem";
 import { User } from "@prisma/client";
 import useSidebar from "@/hooks/use-sidebar";
+import UserItem, { UserItemSkeleton } from "./UserItem";
 
 type Props = {
   data: {
@@ -12,6 +12,7 @@ type Props = {
       id: string;
       username: string;
       imageUrl: string | null;
+      stream: { isLive: boolean } | null;
     };
   }[];
 };
@@ -29,7 +30,12 @@ const Following = ({ data }: Props) => {
 
       <ul className="space-y-2 px-2">
         {data.map((item) => (
-          <UserItem key={item.id} user={item.following as User} />
+          <UserItem
+            key={item.id}
+            user={
+              item.following as User & { stream: { isLive: boolean } | null }
+            }
+          />
         ))}
       </ul>
     </div>

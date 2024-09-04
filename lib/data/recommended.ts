@@ -12,7 +12,7 @@ export const getRecommended = async () => {
     currentUser = null;
   }
 
-  let users: User[] = [];
+  let users: (User & { stream: { isLive: boolean } | null })[] = [];
 
   if (currentUser) {
     const followedUsers = await getFollowedUsers();
@@ -54,6 +54,13 @@ export const getRecommended = async () => {
           },
         ],
       },
+      include: {
+        stream: {
+          select: {
+            isLive: true,
+          },
+        },
+      },
       take: 10,
       orderBy: {
         createdAt: "desc",
@@ -61,6 +68,13 @@ export const getRecommended = async () => {
     });
   } else {
     users = await prismadb.user.findMany({
+      include: {
+        stream: {
+          select: {
+            isLive: true,
+          },
+        },
+      },
       orderBy: {
         createdAt: "desc",
       },

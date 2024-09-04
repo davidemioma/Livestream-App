@@ -36,6 +36,9 @@ export const getUserByUsername = async (username: string) => {
     where: {
       username,
     },
+    include: {
+      stream: true,
+    },
   });
 
   return user;
@@ -96,6 +99,11 @@ export const getFollowedUsers = async (take?: number) => {
             id: true,
             username: true,
             imageUrl: true,
+            stream: {
+              select: {
+                isLive: true,
+              },
+            },
           },
         },
       },

@@ -66,7 +66,7 @@ export async function POST(req: Request) {
         imageUrl: payload.data.image_url,
         username: payload.data.username,
         email: payload.data.email_addresses[0].email_address,
-        streams: {
+        stream: {
           create: {
             name: `${payload.data.username}'s Stream`,
           },

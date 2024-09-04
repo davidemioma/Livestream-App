@@ -8,13 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
-  user: User;
+  user: User & { stream: { isLive: boolean } | null };
 };
 
 const UserItem = ({ user }: Props) => {
   const { collapsed } = useSidebar();
 
-  const isLive = true;
+  const isLive = user.stream?.isLive || false;
 
   return (
     <Button

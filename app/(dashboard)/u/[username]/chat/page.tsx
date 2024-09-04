@@ -1,19 +1,28 @@
+import prismadb from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/data/auth";
 import ToggleCard from "./_components/ToggleCard";
-import { getStreamByUserId } from "@/lib/data/stream";
-import { getCurrentUserByUsername } from "@/lib/data/auth";
 
-export default async function UChatPage({
-  params: { username },
-}: {
-  params: { username: string };
-}) {
-  const currentUser = await getCurrentUserByUsername(username);
+export default async function UChatPage() {
+  const currentUser = await getCurrentUser();
 
-  const stream = await getStreamByUserId(currentUser.id);
+  if (!currentUser) {
+    return redirect("/");
+  }
+
+  const stream = await prismadb.stream.findUnique({
+    where: {
+      userId: currentUser.id,
+    },
+    select: {
+      isChatEnabled: true,
+      isChatDelayed: true,
+      isChatFollowersOnly: true,
+    },
+  });
 
   if (!stream) {
-    return redirect("/");
+    throw new Error("Stream not found");
   }
 
   return (
@@ -34,7 +43,7 @@ export default async function UChatPage({
         />
 
         <ToggleCard
-          label="Must be following to chat"
+          label="Followers Only Chat"
           value={stream.isChatFollowersOnly}
           field="isChatFollowersOnly"
         />
