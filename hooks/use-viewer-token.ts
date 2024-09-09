@@ -17,11 +17,12 @@ const useViewerToken = (hostIdentity: string) => {
 
       const jwtData = jwtDecode(token) as JwtPayload & {
         name: string;
+        sub: string;
       };
 
       setName(jwtData?.name || "");
 
-      setIdentity(jwtData?.jti || "");
+      setIdentity(jwtData?.sub || "");
     } catch (err) {
       throw new Error("Something went wrong");
     }
