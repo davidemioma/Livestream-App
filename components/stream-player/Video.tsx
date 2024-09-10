@@ -4,6 +4,7 @@ import React from "react";
 import LiveVideo from "./LiveVideo";
 import OfflineVideo from "./OfflineVideo";
 import LoadingVideo from "./LoadingVideo";
+import { Skeleton } from "../ui/skeleton";
 import { ConnectionState, Track } from "livekit-client";
 import {
   useConnectionState,
@@ -38,6 +39,14 @@ const Video = ({ hostname, hostIdentity }: Props) => {
 
   return (
     <div className="group relative aspect-video w-full border-b">{content}</div>
+  );
+};
+
+export const VideoSkeleton = () => {
+  return (
+    <div className="aspect-video w-full border-x border-background">
+      <Skeleton className="h-full w-full rounded-none" />
+    </div>
   );
 };
 

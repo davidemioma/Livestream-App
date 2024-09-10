@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import Chat from "./Chat";
-import Video from "./Video";
 import { cn } from "@/lib/utils";
 import ChatToggle from "./ChatToggle";
+import Chat, { ChatSkeleton } from "./Chat";
 import { User, Stream } from "@prisma/client";
+import Video, { VideoSkeleton } from "./Video";
 import useChatSidebar from "@/hooks/use-chat-sidebar";
 import useViewerToken from "@/hooks/use-viewer-token";
 import { LiveKitRoom } from "@livekit/components-react";
@@ -22,7 +22,7 @@ const StreamPlayer = ({ user, stream, isFollowing }: Props) => {
   const { token, identity, name } = useViewerToken(user.id);
 
   if (!token || !identity || !name) {
-    return <div>Cannot watch stream</div>;
+    return <StreamPlayerSkeleton />;
   }
 
   return (
@@ -58,6 +58,20 @@ const StreamPlayer = ({ user, stream, isFollowing }: Props) => {
         </div>
       </LiveKitRoom>
     </>
+  );
+};
+
+export const StreamPlayerSkeleton = () => {
+  return (
+    <div className="grid h-full w-full lg:grid-cols-3 lg:gap-y-0 2xl:grid-cols-6">
+      <div className="w-full space-y-4 pb-10 scrollbar-hide lg:col-span-2 lg:overflow-y-auto 2xl:col-span-5">
+        <VideoSkeleton />
+      </div>
+
+      <div className="col-span-1">
+        <ChatSkeleton />
+      </div>
+    </div>
   );
 };
 

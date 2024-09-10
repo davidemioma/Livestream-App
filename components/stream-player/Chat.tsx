@@ -2,10 +2,12 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import ChatForm from "./ChatForm";
-import ChatHeader from "./ChatHeader";
+import ChatCommunity from "./ChatCommunity";
 import { useMediaQuery } from "usehooks-ts";
 import { ConnectionState } from "livekit-client";
+import ChatList, { ChatListSkeleton } from "./ChatList";
+import ChatForm, { ChatFormSkeleton } from "./ChatForm";
+import ChatHeader, { ChatHeaderSkeleton } from "./ChatHeader";
 import useChatSidebar, { ChatVariant } from "@/hooks/use-chat-sidebar";
 import {
   useChat,
@@ -74,7 +76,9 @@ const Chat = ({
     <div className="flex h-[calc(100vh-80px)] flex-col overflow-y-scroll border-y border-l bg-white scrollbar-hide dark:border-[#2d2e35] dark:bg-[#252731]">
       <ChatHeader />
 
-      <div className="flex-1">Chats</div>
+      <div className="flex-1 p-3">
+        <ChatList messages={reversedMessages} isHidden={isHidden} />
+      </div>
 
       {variant === ChatVariant.CHAT ? (
         <>
@@ -89,8 +93,26 @@ const Chat = ({
           />
         </>
       ) : (
-        <>Community</>
+        <>
+          <ChatCommunity
+            viewerName={viewerName}
+            hostName={hostIdentity}
+            isHidden={isHidden}
+          />
+        </>
       )}
+    </div>
+  );
+};
+
+export const ChatSkeleton = () => {
+  return (
+    <div className="flex h-[calc(100vh-80px)] flex-col border-y border-l bg-white dark:border-[#2d2e35] dark:bg-[#252731]">
+      <ChatHeaderSkeleton />
+
+      <ChatListSkeleton />
+
+      <ChatFormSkeleton />
     </div>
   );
 };
