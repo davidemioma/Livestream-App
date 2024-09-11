@@ -3,6 +3,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import ChatToggle from "./ChatToggle";
+import StreamInfo from "./StreamInfo";
 import Chat, { ChatSkeleton } from "./Chat";
 import { User, Stream } from "@prisma/client";
 import Video, { VideoSkeleton } from "./Video";
@@ -52,6 +53,13 @@ const StreamPlayer = ({ user, stream, isFollowing }: Props) => {
             viewerIdentity={identity}
             imageUrl={user.imageUrl || "/no-profile.jpeg"}
             isFollowing={isFollowing}
+          />
+
+          <StreamInfo
+            name={stream.name}
+            thumbnail={stream.thumbnailUrl}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
           />
         </div>
 
