@@ -45,7 +45,7 @@ const Video = ({ hostname, hostIdentity }: Props) => {
 export const VideoSkeleton = () => {
   return (
     <div className="aspect-video w-full border-x border-background">
-      <Skeleton className="h-full w-full rounded-none" />
+      <Skeleton className="h-full w-full rounded-none" isBackground />
     </div>
   );
 };

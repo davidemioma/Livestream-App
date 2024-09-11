@@ -6,6 +6,7 @@ import ChatToggle from "./ChatToggle";
 import Chat, { ChatSkeleton } from "./Chat";
 import { User, Stream } from "@prisma/client";
 import Video, { VideoSkeleton } from "./Video";
+import Header, { HeaderSkeleton } from "./Header";
 import useChatSidebar from "@/hooks/use-chat-sidebar";
 import useViewerToken from "@/hooks/use-viewer-token";
 import { LiveKitRoom } from "@livekit/components-react";
@@ -43,6 +44,15 @@ const StreamPlayer = ({ user, stream, isFollowing }: Props) => {
       >
         <div className="w-full pb-10 scrollbar-hide lg:col-span-2 lg:overflow-y-auto 2xl:col-span-5">
           <Video hostname={user.username} hostIdentity={user.id} />
+
+          <Header
+            name={stream.name}
+            hostIdentity={user.id}
+            hostname={user.username}
+            viewerIdentity={identity}
+            imageUrl={user.imageUrl || "/no-profile.jpeg"}
+            isFollowing={isFollowing}
+          />
         </div>
 
         <div className={cn("col-span-1", collapsed && "hidden")}>
@@ -66,6 +76,8 @@ export const StreamPlayerSkeleton = () => {
     <div className="grid h-full w-full lg:grid-cols-3 lg:gap-y-0 2xl:grid-cols-6">
       <div className="w-full space-y-4 pb-10 scrollbar-hide lg:col-span-2 lg:overflow-y-auto 2xl:col-span-5">
         <VideoSkeleton />
+
+        <HeaderSkeleton />
       </div>
 
       <div className="col-span-1">

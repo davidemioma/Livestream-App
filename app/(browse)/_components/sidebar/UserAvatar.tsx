@@ -56,7 +56,12 @@ const UserAvatar = ({ imageUrl, username, isLive, showBadge, size }: Props) => {
 };
 
 export const UserAvatarSkeleton = ({ size }: AvatarSkeletonProps) => {
-  return <Skeleton className={cn("rounded-full", avatarSize({ size }))} />;
+  return (
+    <Skeleton
+      className={cn("rounded-full", avatarSize({ size }))}
+      isBackground
+    />
+  );
 };
 
 export default UserAvatar;
