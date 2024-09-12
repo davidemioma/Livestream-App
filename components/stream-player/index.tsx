@@ -2,6 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
+import AboutCard from "./AboutCard";
 import ChatToggle from "./ChatToggle";
 import StreamInfo from "./StreamInfo";
 import Chat, { ChatSkeleton } from "./Chat";
@@ -13,7 +14,11 @@ import useViewerToken from "@/hooks/use-viewer-token";
 import { LiveKitRoom } from "@livekit/components-react";
 
 type Props = {
-  user: User;
+  user: User & {
+    _count: {
+      followedBy: number;
+    };
+  };
   stream: Stream;
   isFollowing: boolean;
 };
@@ -60,6 +65,14 @@ const StreamPlayer = ({ user, stream, isFollowing }: Props) => {
             thumbnail={stream.thumbnailUrl}
             hostIdentity={user.id}
             viewerIdentity={identity}
+          />
+
+          <AboutCard
+            bio={user.bio}
+            hostIdentity={user.id}
+            hostname={user.username}
+            viewerIdentity={identity}
+            followedByCount={user._count.followedBy}
           />
         </div>
 

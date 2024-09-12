@@ -38,6 +38,11 @@ export const getUserByUsername = async (username: string) => {
     },
     include: {
       stream: true,
+      _count: {
+        select: {
+          followedBy: true,
+        },
+      },
     },
   });
 
@@ -54,7 +59,7 @@ export const isFollowingUser = async (id: string) => {
       throw new Error("User not found");
     }
 
-    if (currentUser.id === otherUser.id) {
+    if (!currentUser || currentUser.id === otherUser.id) {
       return true;
     }
 
@@ -79,6 +84,10 @@ export const isFollowingUser = async (id: string) => {
 export const getFollowedUsers = async (take?: number) => {
   try {
     const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+      return [];
+    }
 
     const followedUsers = await prismadb.follow.findMany({
       where: {
@@ -125,7 +134,7 @@ export const isUserBlocked = async (id: string) => {
       throw new Error("User not found");
     }
 
-    if (currentUser.id === otherUser.id) {
+    if (!currentUser || currentUser.id === otherUser.id) {
       return false;
     }
 
@@ -157,7 +166,7 @@ export const isBlockedByUser = async (id: string) => {
       throw new Error("User not found");
     }
 
-    if (currentUser.id === otherUser.id) {
+    if (!currentUser || currentUser.id === otherUser.id) {
       return false;
     }
 

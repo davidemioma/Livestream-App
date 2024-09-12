@@ -14,9 +14,10 @@ type Props = {
   value?: string;
   onChange: (url?: string) => void;
   disabled: boolean;
+  closeModal?: () => void;
 };
 
-const FileUpload = ({ value, onChange, disabled }: Props) => {
+const FileUpload = ({ value, onChange, disabled, closeModal }: Props) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
@@ -31,6 +32,8 @@ const FileUpload = ({ value, onChange, disabled }: Props) => {
         onChange("");
 
         toast.success("Thumbnail removed successfully");
+
+        closeModal && closeModal();
       } else {
         throw new Error(result.error);
       }

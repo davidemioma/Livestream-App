@@ -6,7 +6,7 @@ export const getCurrentUser = cache(async () => {
   const clerkUser = await currentUser();
 
   if (!clerkUser || !clerkUser.id) {
-    throw new Error("Unauthorized");
+    return null;
   }
 
   const user = await prismadb.user.findUnique({
@@ -15,9 +15,28 @@ export const getCurrentUser = cache(async () => {
     },
   });
 
-  if (!user) {
-    throw new Error("User not found");
+  return user;
+});
+
+export const getCurrentUserWithFollowedBy = cache(async () => {
+  const clerkUser = await currentUser();
+
+  if (!clerkUser || !clerkUser.id) {
+    return null;
   }
+
+  const user = await prismadb.user.findUnique({
+    where: {
+      externalUserId: clerkUser.id,
+    },
+    include: {
+      _count: {
+        select: {
+          followedBy: true,
+        },
+      },
+    },
+  });
 
   return user;
 });

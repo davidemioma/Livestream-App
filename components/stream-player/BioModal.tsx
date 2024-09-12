@@ -2,19 +2,17 @@
 
 import React, { useState, useTransition } from "react";
 import { toast } from "sonner";
-import FileUpload from "./FileUpload";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { updateStream } from "@/lib/actions/stream";
+import { Textarea } from "@/components/ui/textarea";
+import { updateUserInfo } from "@/lib/actions/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StreamSchema, StreamValidator } from "@/lib/validators/stream";
+import { UserSchema, UserValidator } from "@/lib/validators/user";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -29,36 +27,33 @@ import {
 } from "@/components/ui/form";
 
 type Props = {
-  initialName: string;
-  initialThumbnail: string | null;
+  initialValue: string | null;
 };
 
-const InfoModal = ({ initialName, initialThumbnail }: Props) => {
+const BioModal = ({ initialValue }: Props) => {
   const [open, setOpen] = useState(false);
 
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<StreamValidator>({
-    resolver: zodResolver(StreamSchema),
+  const form = useForm<UserValidator>({
+    resolver: zodResolver(UserSchema),
     defaultValues: {
-      name: initialName,
-      thumbnailUrl: initialThumbnail ?? "",
+      bio: initialValue ?? undefined,
     },
   });
 
-  const onSubmit = (values: StreamValidator) => {
+  const onSubmit = (values: UserValidator) => {
     startTransition(() => {
-      updateStream({
-        name: values.name,
-        thumbnailUrl: values.thumbnailUrl ?? undefined,
+      updateUserInfo({
+        ...values,
       })
         .then(() => {
-          toast.success("Stream updated successfully");
+          toast.success("User updated successfully");
 
           setOpen(false);
         })
         .catch((error) => {
-          toast.error("Something went wrong! Unable to update stream.");
+          toast.error("Something went wrong! Unable to update user.");
         });
     });
   };
@@ -73,44 +68,22 @@ const InfoModal = ({ initialName, initialThumbnail }: Props) => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit</DialogTitle>
-
-          <DialogDescription>Customise your stream details.</DialogDescription>
+          <DialogTitle className="mb-2">Edit Your Bio</DialogTitle>
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
                 control={form.control}
-                name="name"
+                name="bio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>Bio</FormLabel>
 
                     <FormControl>
-                      <Input
-                        placeholder="Stream Name..."
+                      <Textarea
+                        placeholder="Write Something..."
                         {...field}
                         disabled={isPending}
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="thumbnailUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Thumbnail</FormLabel>
-
-                    <FormControl>
-                      <FileUpload
-                        {...field}
-                        disabled={isPending}
-                        closeModal={() => setOpen(false)}
                       />
                     </FormControl>
 
@@ -145,4 +118,4 @@ const InfoModal = ({ initialName, initialThumbnail }: Props) => {
   );
 };
 
-export default InfoModal;
+export default BioModal;

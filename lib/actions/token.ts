@@ -10,14 +10,20 @@ export const createViewerToken = async (hostIdentity: string) => {
     let self;
 
     // Set self to either current user or guest
-    try {
-      self = await getCurrentUser();
-    } catch (err) {
+    const currentUser = await getCurrentUser();
+
+    if (currentUser) {
+      self = { id: currentUser.id, username: currentUser.username };
+    } else {
       const id = uuidv4();
 
       const username = `guest#${Math.random() * 10000}`;
 
       self = { id, username };
+    }
+
+    if (!self) {
+      throw new Error("Unauthorized");
     }
 
     // Get the host

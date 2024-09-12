@@ -55,7 +55,7 @@ const Actions = ({ isFollowing, hostIdentity, isHost }: Props) => {
     });
   };
 
-  if (isHost) return null;
+  if (isHost || !userId) return null;
 
   return (
     <Button
