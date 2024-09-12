@@ -1,5 +1,6 @@
 "use server";
 
+import { updateStream } from "./stream";
 import { UTApi } from "uploadthing/server";
 
 const utapi = new UTApi();
@@ -20,6 +21,8 @@ export async function deleteFile(fileUrl: string) {
     const res = await utapi.deleteFiles([fileKey]);
 
     console.log("UploadThing delete response:", res);
+
+    await updateStream({ thumbnailUrl: null });
 
     return { success: true };
   } catch (error) {
