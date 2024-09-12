@@ -2,7 +2,6 @@
 
 import React, { useMemo, useState } from "react";
 import { Input } from "../ui/input";
-import { Skeleton } from "../ui/skeleton";
 import CommunityItem from "./CommunityItem";
 import useDebounce from "@/hooks/use-debounce";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -12,10 +11,9 @@ import { LocalParticipant, RemoteParticipant } from "livekit-client";
 type Props = {
   viewerName: string;
   hostName: string;
-  isHidden: boolean;
 };
 
-const ChatCommunity = ({ viewerName, hostName, isHidden }: Props) => {
+const ChatCommunity = ({ viewerName, hostName }: Props) => {
   const participants = useParticipants();
 
   const [value, setValue] = useState<string>("");
@@ -41,13 +39,13 @@ const ChatCommunity = ({ viewerName, hostName, isHidden }: Props) => {
     );
   }, [participants, debouncedValue]);
 
-  if (isHidden) {
-    return (
-      <div className="flex h-[25%] items-center justify-center border-t">
-        <p className="text-sm text-muted-foreground">Community is disabled</p>
-      </div>
-    );
-  }
+  // if (isHidden) {
+  //   return (
+  //     <div className="flex h-[25%] items-center justify-center border-t">
+  //       <p className="text-sm text-muted-foreground">Community is disabled</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="border-t p-4 dark:border-white/10">

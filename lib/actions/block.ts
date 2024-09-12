@@ -4,6 +4,7 @@ import prismadb from "../prisma";
 import { getUserById } from "../data/user";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "../data/auth";
+import { roomService } from "../livekit";
 
 export const blockOrUnblockUser = async ({
   id,
@@ -26,7 +27,11 @@ export const blockOrUnblockUser = async ({
     const otherUser = await getUserById(id);
 
     if (!otherUser) {
-      throw new Error("User not found");
+      if (task === "block") {
+        await roomService.removeParticipant(currentUser.id, id);
+      }
+
+      return { messge: "This is a guest user" };
     }
 
     // Check if the user is already blocked
@@ -43,9 +48,6 @@ export const blockOrUnblockUser = async ({
     });
 
     if (task === "block") {
-      // Todo: Kick user from stream and chat.
-      // Todo: Allow ability to kick out guest users.
-
       if (isBlocked) {
         throw new Error("You are already blocking this user");
       }
@@ -57,9 +59,11 @@ export const blockOrUnblockUser = async ({
         },
       });
 
-      revalidatePath("/");
+      revalidatePath(`/${currentUser.username}`);
 
-      revalidatePath(`/${otherUser.username}`);
+      revalidatePath(`/u/${currentUser.username}`);
+
+      revalidatePath(`/u/${currentUser.username}/community`);
 
       return { success: true };
     } else {
@@ -77,9 +81,11 @@ export const blockOrUnblockUser = async ({
         },
       });
 
-      revalidatePath("/");
+      revalidatePath(`/${currentUser.username}`);
 
-      revalidatePath(`/${otherUser.username}`);
+      revalidatePath(`/u/${currentUser.username}`);
+
+      revalidatePath(`/u/${currentUser.username}/community`);
 
       return { success: true };
     }

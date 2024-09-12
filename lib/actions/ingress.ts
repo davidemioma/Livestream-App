@@ -1,6 +1,7 @@
 "use server";
 
 import prismadb from "../prisma";
+import { roomService } from "../livekit";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "../data/auth";
 import {
@@ -8,16 +9,9 @@ import {
   IngressInput,
   IngressClient,
   IngressVideoEncodingPreset,
-  RoomServiceClient,
   TrackSource,
   type CreateIngressOptions,
 } from "livekit-server-sdk";
-
-const roomService = new RoomServiceClient(
-  process.env.LIVEKIT_API_URL || "",
-  process.env.LIVEKIT_API_KEY || "",
-  process.env.LIVEKIT_API_SECRET || "",
-);
 
 const ingressClient = new IngressClient(process.env.LIVEKIT_API_URL || "");
 

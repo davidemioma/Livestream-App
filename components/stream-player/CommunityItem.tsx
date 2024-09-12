@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useTransition } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -21,7 +23,7 @@ const CommunityItem = ({
 }: Props) => {
   const isHost = viewerName === hostname;
 
-  const isSelf = participantName === viewerName;
+  const isSelf = participantName && participantName === viewerName;
 
   const color = stringToColor(participantName || "");
 
@@ -57,7 +59,7 @@ const CommunityItem = ({
         {participantName}
       </span>
 
-      {isHost && !self && (
+      {isHost && !isSelf && (
         <CustomToolTip label="Block User">
           <Button
             className="h-auto w-auto p-1 opacity-0 transition-opacity group-hover:opacity-100"

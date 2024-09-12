@@ -94,11 +94,7 @@ const Chat = ({
         </>
       ) : (
         <>
-          <ChatCommunity
-            viewerName={viewerName}
-            hostName={hostIdentity}
-            isHidden={isHidden}
-          />
+          <ChatCommunity viewerName={viewerName} hostName={hostname} />
         </>
       )}
     </div>
