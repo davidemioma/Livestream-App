@@ -42,13 +42,16 @@ const InfoModal = ({ initialName, initialThumbnail }: Props) => {
     resolver: zodResolver(StreamSchema),
     defaultValues: {
       name: initialName,
-      thumbnailUrl: initialThumbnail || "",
+      thumbnailUrl: initialThumbnail ?? "",
     },
   });
 
   const onSubmit = (values: StreamValidator) => {
     startTransition(() => {
-      updateStream(values)
+      updateStream({
+        name: values.name,
+        thumbnailUrl: values.thumbnailUrl ?? undefined,
+      })
         .then(() => {
           toast.success("Stream updated successfully");
 
