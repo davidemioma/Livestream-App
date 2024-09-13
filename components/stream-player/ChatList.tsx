@@ -1,7 +1,7 @@
 import React from "react";
 import ChatMessage from "./ChatMessage";
-import { ReceivedChatMessage } from "@livekit/components-react";
 import { Skeleton } from "../ui/skeleton";
+import { ReceivedChatMessage } from "@livekit/components-react";
 
 type Props = {
   messages: ReceivedChatMessage[];

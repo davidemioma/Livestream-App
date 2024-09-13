@@ -22,7 +22,12 @@ export default async function UPage({
 
   return (
     <div className="h-full w-full">
-      <StreamPlayer user={currentUser} stream={stream} isFollowing />
+      <StreamPlayer
+        user={currentUser}
+        followedByCount={currentUser._count.followedBy}
+        stream={stream}
+        isFollowing
+      />
     </div>
   );
 }

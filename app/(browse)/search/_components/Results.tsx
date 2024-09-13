@@ -2,16 +2,17 @@
 
 import React, { useEffect } from "react";
 import { Loader2 } from "lucide-react";
-import StreamCard, { StreamCardSkeleton } from "./StreamCard";
-import { NUMBEROFSTREAMS, StreamProps } from "@/lib/data/stream";
+import { StreamProps } from "@/lib/data/stream";
+import { NUMBEROFSEARCHRESULTS } from "@/lib/data/search";
 import useUnlimitedScrolling from "@/hooks/use-unlimited-scrolling";
 
 type Props = {
+  term: string;
   userId?: string;
   initialStreams: StreamProps[];
 };
 
-const StreamList = ({ userId, initialStreams }: Props) => {
+const Results = ({ term, initialStreams, userId }: Props) => {
   const {
     ref,
     entry,
@@ -21,8 +22,8 @@ const StreamList = ({ userId, initialStreams }: Props) => {
     fetchNextPage,
     isFetchingNextPage,
   } = useUnlimitedScrolling({
-    key: "feed-streams",
-    query: `/api/streams?userId=${userId}&limit=${NUMBEROFSTREAMS}`,
+    key: "search-streams",
+    query: `/api/streams/search?userId=${userId}&limit=${NUMBEROFSEARCHRESULTS}&term=${term}`,
     initialData: initialStreams,
   });
 
@@ -38,7 +39,7 @@ const StreamList = ({ userId, initialStreams }: Props) => {
   }, [entry, fetchNextPage]);
 
   if (isLoading) {
-    return <StreamListSkeleton />;
+    return <ResultsSkeleton />;
   }
 
   if (streams.length === 0) {
@@ -54,7 +55,7 @@ const StreamList = ({ userId, initialStreams }: Props) => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {streams.map((stream, index) => (
           <div key={stream.id} ref={index === streams.length - 1 ? ref : null}>
-            <StreamCard stream={stream} />
+            <div>{stream.name}</div>
           </div>
         ))}
       </div>
@@ -74,16 +75,8 @@ const StreamList = ({ userId, initialStreams }: Props) => {
   );
 };
 
-export const StreamListSkeleton = () => {
-  return (
-    <div className="mx-auto h-full w-full max-w-screen-2xl p-8">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <StreamCardSkeleton key={index} />
-        ))}
-      </div>
-    </div>
-  );
+export const ResultsSkeleton = () => {
+  return <div>ResultsSkeleton</div>;
 };
 
-export default StreamList;
+export default Results;

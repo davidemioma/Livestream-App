@@ -8,7 +8,6 @@ import CustomToolTip from "../CustomToolTip";
 import { Loader2, Trash } from "lucide-react";
 import { deleteFile } from "@/lib/actions/file";
 import { UploadDropzone } from "@/lib/uploadthing";
-import { updateStream } from "@/lib/actions/stream";
 
 type Props = {
   value?: string;

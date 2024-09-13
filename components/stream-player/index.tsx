@@ -6,24 +6,38 @@ import AboutCard from "./AboutCard";
 import ChatToggle from "./ChatToggle";
 import StreamInfo from "./StreamInfo";
 import Chat, { ChatSkeleton } from "./Chat";
-import { User, Stream } from "@prisma/client";
 import Video, { VideoSkeleton } from "./Video";
 import Header, { HeaderSkeleton } from "./Header";
 import useChatSidebar from "@/hooks/use-chat-sidebar";
 import useViewerToken from "@/hooks/use-viewer-token";
 import { LiveKitRoom } from "@livekit/components-react";
 
-type Props = {
-  user: User & {
-    _count: {
-      followedBy: number;
-    };
+export type StreamPlayerProps = {
+  user: {
+    id: string;
+    username: string;
+    imageUrl: string | null;
+    bio: string | null;
   };
-  stream: Stream;
+  followedByCount: number;
+  stream: {
+    name: string;
+    id: string;
+    isChatEnabled: boolean;
+    isChatDelayed: boolean;
+    thumbnailUrl: string | null;
+    isLive: boolean;
+    isChatFollowersOnly: boolean;
+  };
   isFollowing: boolean;
 };
 
-const StreamPlayer = ({ user, stream, isFollowing }: Props) => {
+const StreamPlayer = ({
+  user,
+  stream,
+  followedByCount,
+  isFollowing,
+}: StreamPlayerProps) => {
   const { collapsed } = useChatSidebar();
 
   const { token, identity, name } = useViewerToken(user.id);
@@ -72,7 +86,7 @@ const StreamPlayer = ({ user, stream, isFollowing }: Props) => {
             hostIdentity={user.id}
             hostname={user.username}
             viewerIdentity={identity}
-            followedByCount={user._count.followedBy}
+            followedByCount={followedByCount}
           />
         </div>
 

@@ -16,7 +16,7 @@ const Thumbnail = ({ src, fallback, isLive, username }: Props) => {
 
   if (!src) {
     content = (
-      <div className="flex h-full w-full items-center justify-center rounded-md bg-background transition-transform group-hover:translate-x-2 group-hover:translate-y-1 dark:bg-[#252731]">
+      <div className="flex h-full w-full items-center justify-center rounded-md bg-background transition-transform group-hover:-translate-y-2 group-hover:translate-x-2 dark:bg-[#252731]">
         <UserAvatar
           size="lg"
           showBadge
@@ -43,7 +43,7 @@ const Thumbnail = ({ src, fallback, isLive, username }: Props) => {
 
       {content}
 
-      {isLive && (
+      {isLive && src && (
         <div className="absolute left-4 top-4">
           <LiveBadge />
         </div>

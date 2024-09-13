@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import StreamPlayer from "@/components/stream-player";
 import { getUserByUsername } from "@/lib/data/user";
+import StreamPlayer from "@/components/stream-player";
 import { isBlockedByUser, isFollowingUser } from "@/lib/data/user";
 
 export default async function Userpage({
@@ -25,6 +25,16 @@ export default async function Userpage({
   }
 
   return (
-    <StreamPlayer user={user} stream={user.stream} isFollowing={isFollowing} />
+    <StreamPlayer
+      user={{
+        id: user.id,
+        username: user.username,
+        imageUrl: user.imageUrl,
+        bio: user.bio,
+      }}
+      followedByCount={user._count.followedBy}
+      stream={user.stream}
+      isFollowing={isFollowing}
+    />
   );
 }
