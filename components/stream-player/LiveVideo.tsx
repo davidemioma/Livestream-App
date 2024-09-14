@@ -88,10 +88,10 @@ const LiveVideo = ({ participant }: Props) => {
             onToggle={toggleMute}
           />
 
-          <FullScreenControl
+          {/* <FullScreenControl
             isFullScreen={isFullScreen}
             onToggle={toggleFullScreen}
-          />
+          /> */}
         </div>
       </div>
     </div>

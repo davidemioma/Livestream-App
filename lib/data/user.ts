@@ -201,3 +201,24 @@ export const isBlockedByUser = async (id: string) => {
     return false;
   }
 };
+
+export const getBlockedUsers = async (userId: string) => {
+  const blockedUsers = await prismadb.block.findMany({
+    where: {
+      blockerId: userId,
+    },
+    select: {
+      id: true,
+      blockedUser: {
+        select: {
+          id: true,
+          username: true,
+          imageUrl: true,
+          createdAt: true,
+        },
+      },
+    },
+  });
+
+  return blockedUsers;
+};

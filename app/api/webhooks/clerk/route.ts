@@ -2,6 +2,7 @@ import { Webhook } from "svix";
 import prismadb from "@/lib/prisma";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { resetIngress } from "@/lib/actions/ingress";
 
 export async function POST(req: Request) {
   // Get webhook secret
@@ -102,6 +103,9 @@ export async function POST(req: Request) {
   }
 
   if (eventType === "user.deleted") {
+    // Reset Ingress
+    await resetIngress(payload.data.id);
+
     // Delete user in the database
     await prismadb.user.delete({
       where: {

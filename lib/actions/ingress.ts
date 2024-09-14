@@ -15,7 +15,7 @@ import {
 
 const ingressClient = new IngressClient(process.env.LIVEKIT_API_URL || "");
 
-const resetIngress = async (hostIdentity: string) => {
+export const resetIngress = async (hostIdentity: string) => {
   try {
     const ingresses = await ingressClient.listIngress({
       roomName: hostIdentity,
