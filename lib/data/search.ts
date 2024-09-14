@@ -45,6 +45,7 @@ export const getSearchResults = async ({
         name: true,
         isLive: true,
         thumbnailUrl: true,
+        updatedAt: true,
         user: {
           select: {
             id: true,
@@ -84,6 +85,7 @@ export const getSearchResults = async ({
         name: true,
         isLive: true,
         thumbnailUrl: true,
+        updatedAt: true,
         user: {
           select: {
             id: true,

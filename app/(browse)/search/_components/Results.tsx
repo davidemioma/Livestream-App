@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { StreamProps } from "@/lib/data/stream";
 import { NUMBEROFSEARCHRESULTS } from "@/lib/data/search";
+import ResultCard, { ResultCardSkeleton } from "./ResultCard";
 import useUnlimitedScrolling from "@/hooks/use-unlimited-scrolling";
 
 type Props = {
@@ -45,17 +46,17 @@ const Results = ({ term, initialStreams, userId }: Props) => {
   if (streams.length === 0) {
     return (
       <div className="text-center text-sm text-muted-foreground">
-        No streams found
+        No results found! Try searching for something else.
       </div>
     );
   }
 
   return (
     <div className="space-y-8">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      <div className="flex flex-col gap-4">
         {streams.map((stream, index) => (
           <div key={stream.id} ref={index === streams.length - 1 ? ref : null}>
-            <div>{stream.name}</div>
+            <ResultCard stream={stream} />
           </div>
         ))}
       </div>
@@ -76,7 +77,13 @@ const Results = ({ term, initialStreams, userId }: Props) => {
 };
 
 export const ResultsSkeleton = () => {
-  return <div>ResultsSkeleton</div>;
+  return (
+    <div className="flex flex-col gap-4">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <ResultCardSkeleton key={index} />
+      ))}
+    </div>
+  );
 };
 
 export default Results;

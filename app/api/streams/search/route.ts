@@ -57,6 +57,7 @@ export async function GET(request: Request) {
           name: true,
           isLive: true,
           thumbnailUrl: true,
+          updatedAt: true,
           user: {
             select: {
               id: true,
@@ -97,6 +98,7 @@ export async function GET(request: Request) {
           name: true,
           isLive: true,
           thumbnailUrl: true,
+          updatedAt: true,
           user: {
             select: {
               id: true,

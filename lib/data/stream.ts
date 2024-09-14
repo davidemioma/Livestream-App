@@ -13,7 +13,7 @@ export const getStreamByUserId = async (userId: string) => {
 
 export type StreamProps = Pick<
   Stream,
-  "id" | "name" | "isLive" | "thumbnailUrl"
+  "id" | "name" | "isLive" | "thumbnailUrl" | "updatedAt"
 > & {
   user: Pick<User, "id" | "username" | "imageUrl">;
 };
@@ -42,6 +42,7 @@ export const getStreams = async ({ userId }: { userId?: string }) => {
         name: true,
         isLive: true,
         thumbnailUrl: true,
+        updatedAt: true,
         user: {
           select: {
             id: true,
@@ -65,6 +66,7 @@ export const getStreams = async ({ userId }: { userId?: string }) => {
         name: true,
         isLive: true,
         thumbnailUrl: true,
+        updatedAt: true,
         user: {
           select: {
             id: true,
