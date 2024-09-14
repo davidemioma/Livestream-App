@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { currentUser } from "@clerk/nextjs/server";
 import CustomToolTip from "@/components/CustomToolTip";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { SignInButton, UserButton } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 
 const Actions = async () => {
   const user = await currentUser();
@@ -13,11 +13,11 @@ const Actions = async () => {
   return (
     <div className="ml-4 flex items-center gap-3 md:gap-4 lg:ml-0">
       {!user && (
-        <SignInButton>
+        <Link href="/sign-in">
           <Button size="sm" variant="primary">
             Sign In
           </Button>
-        </SignInButton>
+        </Link>
       )}
 
       {user && <UserButton afterSignOutUrl="/" />}

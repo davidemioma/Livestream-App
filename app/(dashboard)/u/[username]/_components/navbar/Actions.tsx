@@ -13,7 +13,7 @@ const Actions = async () => {
     <div className="ml-4 flex items-center gap-3 md:gap-4 lg:ml-0">
       <ThemeToggle />
 
-      <UserButton signInUrl="/sign-in" />
+      <UserButton afterSignOutUrl="/" />
 
       <Button
         className="p-2 text-muted-foreground hover:text-primary"
