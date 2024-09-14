@@ -1,6 +1,7 @@
 import { Webhook } from "svix";
 import prismadb from "@/lib/prisma";
 import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { resetIngress } from "@/lib/actions/ingress";
 
@@ -100,6 +101,12 @@ export async function POST(req: Request) {
         username: payload.data.username,
       },
     });
+
+    revalidatePath("/");
+
+    revalidatePath(`/${currUser.username}`);
+
+    revalidatePath(`/u/${currUser.username}`);
   }
 
   if (eventType === "user.deleted") {
