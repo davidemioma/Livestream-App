@@ -20,9 +20,9 @@ const Actions = async () => {
         </SignInButton>
       )}
 
-      {!!user && <UserButton afterSignOutUrl="/" />}
+      {user && <UserButton afterSignOutUrl="/" />}
 
-      {!!user && (
+      {user && (
         <CustomToolTip label="Dashboard" asChild side="bottom" align="center">
           <Link
             href={`/u/${user.username}`}
