@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <div className="mx-auto h-full w-full max-w-screen-2xl p-8">
       <h2 className="mb-4 text-lg font-semibold md:text-xl">
-        Streams we think you'll like
+        Streams we think you&apos;ll like
       </h2>
 
       <Suspense fallback={<StreamListSkeleton />}>
