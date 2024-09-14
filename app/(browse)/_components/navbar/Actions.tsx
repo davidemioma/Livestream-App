@@ -13,7 +13,7 @@ const Actions = async () => {
   return (
     <div className="ml-4 flex items-center gap-3 md:gap-4 lg:ml-0">
       {!user && (
-        <SignInButton>
+        <SignInButton signUpFallbackRedirectUrl="/">
           <Button size="sm" variant="primary">
             Sign In
           </Button>
