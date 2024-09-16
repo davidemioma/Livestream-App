@@ -55,7 +55,7 @@ const Routes = () => {
       {routes.map((route) => (
         <Link
           className={cn(
-            "h-12 w-full",
+            "flex h-12 w-full items-center",
             collapsed ? "justify-center" : "justify-start",
             pathname === route.href && "bg-accent",
             buttonVariants({ variant: "ghost" }),
