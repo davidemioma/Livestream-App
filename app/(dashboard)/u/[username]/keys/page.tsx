@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import prismadb from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import UrlCard from "./_components/UrlCard";
-import KeyCard from "./_components/KeyCard";
 import { getCurrentUser } from "@/lib/data/auth";
 import ConnectModal from "./_components/ConnectModal";
+import UrlCard, { UrlCardSkeleton } from "./_components/UrlCard";
+import KeyCard, { KeyCardSkeleton } from "./_components/KeyCard";
 
 export default async function UKeysPage() {
   const currentUser = await getCurrentUser();
@@ -34,11 +35,21 @@ export default async function UKeysPage() {
         <ConnectModal />
       </div>
 
-      <div className="space-y-4">
-        <UrlCard serverUrl={stream.serverUrl} />
+      <Suspense
+        fallback={
+          <div className="space-y-4">
+            <UrlCardSkeleton />
 
-        <KeyCard streamKey={stream.streamKey} />
-      </div>
+            <KeyCardSkeleton />
+          </div>
+        }
+      >
+        <div className="space-y-4">
+          <UrlCard serverUrl={stream.serverUrl} />
+
+          <KeyCard streamKey={stream.streamKey} />
+        </div>
+      </Suspense>
     </div>
   );
 }

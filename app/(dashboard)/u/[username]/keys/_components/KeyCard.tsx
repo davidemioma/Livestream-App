@@ -5,6 +5,7 @@ import CopyBtn from "@/components/CopyBtn";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Props = {
@@ -43,6 +44,28 @@ const KeyCard = ({ streamKey }: Props) => {
           </Button>
 
           <CopyBtn value={streamKey || ""} />
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export const KeyCardSkeleton = () => {
+  return (
+    <Card className="bg-white dark:bg-[#252731]">
+      <CardHeader>
+        <CardTitle>
+          <Skeleton className="h-4 w-20" />
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent className="w-full">
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-8 flex-1" />
+
+          <Skeleton className="h-8 w-8" />
+
+          <Skeleton className="h-8 w-8" />
         </div>
       </CardContent>
     </Card>
