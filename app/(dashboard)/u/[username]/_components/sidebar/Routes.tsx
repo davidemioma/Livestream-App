@@ -55,15 +55,19 @@ const Routes = () => {
       {routes.map((route) => (
         <Link
           className={cn(
-            "flex h-12 w-full items-center",
-            collapsed ? "justify-center" : "justify-start",
+            "h-12 w-full",
             pathname === route.href && "bg-accent",
             buttonVariants({ variant: "ghost" }),
           )}
           href={route.href}
           key={route.href}
         >
-          <div className="flex items-center gap-4">
+          <div
+            className={cn(
+              "flex w-full items-center gap-4",
+              collapsed ? "justify-center" : "justify-start",
+            )}
+          >
             <route.icon className="h-4 w-4" />
 
             {!collapsed && <span>{route.name}</span>}
